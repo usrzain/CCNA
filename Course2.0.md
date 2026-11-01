@@ -680,4 +680,88 @@
 
 ------------------------------------------------------------------
 
+# DHCPv6
 
+- Two types of IPv6 addresses are assigned to a host 
+  - IPv6 GUA ( Globally Unique Address )
+  - IPv6 LLA ( Link Local Address )
+
+
+# IPv6 GUA Assignment:
+
+- When a Router act as a IPv6 DHCP server, it continuously advertises information which can help host to acquire it's IPv6 configuration.
+
+- For this advertisement Router uses a special ICMP Message: " Router Advertisement " message.Which includes info for host to acquire IPv6 Config.
+
+
+# Types of IPv6 GUA Assignment:
+
+- Stateless :  " No device is tracking the address assignment "
+
+  - SLAAC Only :
+    - RA Message contains : network prefix, prefix-length, default gateway info.
+    - Host uses these info to create their own GUA.
+
+
+  - SLAAC With DHCPv6 Server:
+    - RA tells host a set of info for GUA creation, and information of DHCPv6 server for additional info
+    - Host create their own GUA and contact DHCPv6 server for additional info.
+
+
+
+
+- Stateful :  " A DHCPv6 server is tracking address allocation " 
+
+  - DHCPv6 Server:
+    - RA tells host to contact DHCPv6 server of DHCPv6 enabled router for IPv6 config information, except default gateway.
+    - Host contact DHCPv6 server for all configuration related to IPv6 assignment
+    - But host obtain default Gateway info from RA.
+
+
+# Three RA Message Flags to guide host to use which method for address assignment.
+
+
+- A : Use SLAAC
+- O : Use Stateless DHCPv6 Server
+- M : Use Stateful DHCPv6 server to obtain IPv6 GUA
+
+-----------------------
+
+# SLAAC:
+
+- This method allows host to create their own GUA without the need of services of DHCPv6 server.
+- SLAAC is stateless service, so no record of address assignment will be kept.
+- First Host sends a Router Solicitation (RS) broadcast Message, telling " I need to have an address please guide me ". Then SLAAC Enabled Router send RA in response. 
+- If no RS has been sent by host still RA Messages which are send every 200 seconds are used by SLAAC to tell the important information which host will use to create it's GUA
+-  SLAAC can be deployed as SLAAC-Only or SLAAC with DHCPv6
+-  
+
+# Enabling SLAAC:
+
+- ipv6 unicast routing:
+
+<Explanation:> 
+- In IPv4, ARP broadcast messages are used to ask all of nodes present in network to respond to DHCP query. 
+- But In IPv6 domain, there are multicast groups have created which are identified by multicast addresses , so specific messages can be heard by specific devices. For example:
+
+  - FF02::1    ---->  All nodes are part of it by default
+  - FF02::2    ---->  All IPv6 routing enabled Routers
+  - FF02::5    ---->  All OSPFv6 enabled Routers
+  - FF02::6    ---->  OSPFv6 DR/BDR Routers
+  - FF02::9    ---->  All RIPng enabled Routers
+  - FF02::A    ---->  All EIGRP enabled Routers
+
+- So by configuring this command,the router becomes part of IPv6 enabled multicast group, which is identified by Multicast address : FF02::2  . And can response by RA once hears a RS from a host.
+
+- Verify which groups a Router has joined:
+
+  - show ipv6 interface G0/1 | section Joined
+
+
+# SLAAC Only Method:
+
+- When SLAAC is enabled, SLAAC-Only is the default method enabled
+- Then Router starts sending RA Messages / responding to RS Messages.
+- This RA Message will have  
+    - " A = 1 "
+- 
