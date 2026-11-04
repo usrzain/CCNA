@@ -727,6 +727,21 @@
 
 -----------------------
 
+# !!!! Wait A minute.
+
+# Before GUA is configured on Router manually ( If Router is not using DHCPv6 for Dynamic assignment ) and RS messages are sent by host for seeking help in obtaining GUA and Router is replying with RA messages to guide the host how to obtain GUA.
+
+<Both_Router_&_Host_have_already_created_their_own_LLA_to_talk_to_others_on_same_network>
+<While_GUA_is_for_communicating_across_the_networks>
+
+
+# LLA is consists of FE80::<Rest_of_MAC_Address>
+
+# Rules:
+
+- Routers will never forward packet having LLA as source / destination , so even LLA is unique due to unique MAC address being part of it but still the first router will drop the packet if found LLA as source / destination. GUA will be used for routing
+- LLA is never used for normal user traffic  
+
 # SLAAC:
 
 - This method allows host to create their own GUA without the need of services of DHCPv6 server.
