@@ -1,6 +1,6 @@
 <!-- markdownlint-disable -->
 
-<<<<<<< HEAD
+
 # DHCPv6:
 
 <PREFACE>
@@ -199,7 +199,7 @@ A DHCPv6 router can be
 
 -------------------------------------------------------------------
 =======
->>>>>>> e4040ccc0e4b1bc6efab365931bb37576acdcc12
+
 
 # First Hop Redundancy Protocol ( FHRP )
 
@@ -224,12 +224,12 @@ A DHCPv6 router can be
 - In this scenario, Standby router which has become the active one, send a <Gratuitous_ARP>, which is a broadcast frame, telling switch to learn the Virtual MAC on this new port.
 
 
-<<<<<<< HEAD
+
 # List of Options available for FHRP:
 
 
 =======
->>>>>>> e4040ccc0e4b1bc6efab365931bb37576acdcc12
+
 # HSRP :
 
 - It is Cisco proprietary
@@ -252,10 +252,10 @@ A DHCPv6 router can be
 <Learn>:   HSRP has just been configure, listens for HELLO Messages but does not know the Virtual IP Address
 <Listen>:  From the Hello listened, the router now knows the Virtual IP. But until now the Router is neither active / standby. It just passively monitor HELLOs.
 <Speak>:   Router actively sends the HELLO messages and participates in election for active and standby roles.
-<Standby>: Router acts as a designated backup on active router. Periodically sending hello messages and waiting to take over If active router fails
-<Active>:  Router currently forwarding Data packets sent to Virtual MAC and Virtual IP , while sending HELLO Messages to tell standby router that I am alive
+<Standby>: Router acts as a designated backup on active router. Periodically sending hello messages and waiting to take over If active router fails.
+<Active>:  Router currently forwarding Data packets sent to Virtual MAC and Virtual IP , while sending HELLO Messages to tell standby router that I am alive.
 
-<<<<<<< HEAD
+
 
 Configure
 Listen Hello 
@@ -266,7 +266,7 @@ If router is active, then periodically sends HELLO
 
 
 =======
->>>>>>> e4040ccc0e4b1bc6efab365931bb37576acdcc12
+
 # HSRP Timers:
 
 - Hello Timer : 3 seconds
@@ -278,12 +278,167 @@ If router is active, then periodically sends HELLO
 
 - HSRP IPv6 group will have Virtual MAC Address derived from the HSRP Group Number
 - HSRP IPv6 group will have Virtual IPv6 Link Local Address derived from HSRP Virtual MAC Address derived above.
-<<<<<<< HEAD
 
 
 
 ----------------------------
 
-=======
--  
->>>>>>> e4040ccc0e4b1bc6efab365931bb37576acdcc12
+# HSRP for IPv6:
+
+- For this a HSRP Group Number is defined
+- HSRP IPV6 group virtual MAC address is derived from HSRP Group number
+- HSRP Virtual Link Local Address is derived from Virtual MAC Address
+
+
+# Virtual Router Redundancy Protocol 2 ( VRRP 2 )
+
+- Non-proprietary Election protocol used for same redundancy within a LAN
+- One router will be Virtual Router Master, rest of them will be Backups
+
+
+# VRRP 3:
+
+- Supports both IPv4 & IPv6
+- More scalable than VRRP 2
+
+
+
+# Gateway Load Balancing Protocol ( GLBP )
+
+- It is also cisco proprietary for load balancing along redundancy.
+- In this all routers in a Group are a single Virtual Router Group
+- All routers forward traffic
+- Means this is mostly can be used for load balancing, while concurrently providing gateway redundancy.
+- Provides one VIP and multiple Virtual MAC.
+
+
+# GLBP v6 
+
+- Just Cisco Proprietary of GLBP for IPv6 environments
+
+
+# ICMP Router Discovery protocol (IRDP)
+
+- Legacy FHRP solution
+- Allows host to locate 4 routers to provide IPv4 connectivity to non-local IP networks
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------
+
+
+# Packet Forwarding in Routers:
+--------------------------------
+- The speed of packet forwarding depends on how fast a packet can be encapsulated into a Layer 2 header and trailer.
+
+
+# Three (3) Packet Forwarding Mechanisms:
+-----------------------------------------
+
+
+# Process switching:
+
+- Older mechanism
+- When a packet arrives, goes to control plane.
+- In control plane CPU matches the Destination in Routing table and find appropriate egress interface & forward the traffic.
+- Note: This is being done for each & every packet 
+- That's why it is slow and rarely implemented nowadays.
+
+
+# Fast Switching:
+
+- In this, router maintains a <fast-switching-cache>, which hold the info of process switching of packet recently done.
+- When a new packet arrives, the first time forwarding is done by using process switching but, then the result is stored in fast switching cache which is being used whenever similar destination arrives without CPU intervention.
+- It makes the switching a bit faster
+
+
+
+# Cisco Express Forwarding ( CEF ) :
+
+- Default Cisco IOS packet forwarding mechanism
+- It builds 2 table 
+  - Like Fast switching , it builds a Forwarding Information Base.
+  - Adjacency table.
+
+- Table entries are not packet triggered, rather network topology change triggered.
+
+- FIB is an optimized version of Routing Information Board ( RIB ).It holds
+  - Target Network
+  - Next Hop IP Address
+  - Egress interface
+  - Pointers referring to entries to use in adjacency table
+
+- Adjacency Tables holds:
+  - Destination MAC Address
+  - Pre-computed Layer 2 header and trailer
+  - Encapsulation Types
+  - It is built & maintained using ARP or direct connection info
+
+
+
+
+# Routing :
+
+- Lower the <AD> more trust worthy the route is
+- EIGRP AD : 90
+- OSPF AD : 110
+- Directly connected AD : 0
+- Static : 1
+
+
+
+# Dynamic Routing Evolution:
+
+- RIPv1 was introduced in 1988 , but some of it's basic algorithms were used in ARPANET in 1969
+- RIPv2
+- OSPF & IS-IS
+- Cisco Developed IGRP ( Interior Gatewway Routing Protocol ), which was later replaced by EIGRP
+- BGP which was a successor of Exterior Gateway Protocol (EGP)  
+
+
+# Link State RP:
+
+- OSPF v2 , OSPF v3
+- IS-IS , IS-IS for IPv6
+
+
+# Distance Vector RP:
+
+- RIPv2, RIPng
+- EIGRP, EIGRP for IPv6
+
+
+# Path Vector RP:
+
+- BGP-4
+- BGP-MP
+
+-------------------------------
+
+# Routing Protocols & Metric:
+
+- RIP:
+  - Hop Count
+  - max = 15
+
+- OSPF:
+  - Cost : Cumulative BW from SRC to DST
+  - Faster links are assigned lower cost 
+
+- EIGRP:
+  - Metric based on slowest BW and delay values
+  - Includes load and reliability into metric calculation
+
+
+# Equal Cost Load balancing is implemented by default by Dynamic Routing Protocols
+
+
+
+
+
+
+
