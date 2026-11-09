@@ -1,5 +1,6 @@
 <!-- markdownlint-disable -->
 
+<<<<<<< HEAD
 # DHCPv6:
 
 <PREFACE>
@@ -197,6 +198,8 @@ A DHCPv6 router can be
 
 
 -------------------------------------------------------------------
+=======
+>>>>>>> e4040ccc0e4b1bc6efab365931bb37576acdcc12
 
 # First Hop Redundancy Protocol ( FHRP )
 
@@ -221,9 +224,12 @@ A DHCPv6 router can be
 - In this scenario, Standby router which has become the active one, send a <Gratuitous_ARP>, which is a broadcast frame, telling switch to learn the Virtual MAC on this new port.
 
 
+<<<<<<< HEAD
 # List of Options available for FHRP:
 
 
+=======
+>>>>>>> e4040ccc0e4b1bc6efab365931bb37576acdcc12
 # HSRP :
 
 - It is Cisco proprietary
@@ -249,6 +255,7 @@ A DHCPv6 router can be
 <Standby>: Router acts as a designated backup on active router. Periodically sending hello messages and waiting to take over If active router fails
 <Active>:  Router currently forwarding Data packets sent to Virtual MAC and Virtual IP , while sending HELLO Messages to tell standby router that I am alive
 
+<<<<<<< HEAD
 
 Configure
 Listen Hello 
@@ -258,6 +265,8 @@ If gets that I am Standby then periodically sends HELLO and wait for active to f
 If router is active, then periodically sends HELLO
 
 
+=======
+>>>>>>> e4040ccc0e4b1bc6efab365931bb37576acdcc12
 # HSRP Timers:
 
 - Hello Timer : 3 seconds
@@ -269,8 +278,12 @@ If router is active, then periodically sends HELLO
 
 - HSRP IPv6 group will have Virtual MAC Address derived from the HSRP Group Number
 - HSRP IPv6 group will have Virtual IPv6 Link Local Address derived from HSRP Virtual MAC Address derived above.
+<<<<<<< HEAD
 
 
 
 ----------------------------
 
+=======
+-  
+>>>>>>> e4040ccc0e4b1bc6efab365931bb37576acdcc12
