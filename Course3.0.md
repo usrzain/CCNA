@@ -437,8 +437,117 @@ If router is active, then periodically sends HELLO
 # Equal Cost Load balancing is implemented by default by Dynamic Routing Protocols
 
 
+# Important Info:
+-----------------
+
+# show ip route :
+
+- S 10.0.0.0[1/0] via 172.16.2.2
+
+  1 = AD
+  0 = Metric
+
+
+# Two common types of Static Routes:
+
+- Default Static Route
+- Static route to a specific network
+
+
+# Which Address and Prefix Length is used in IPv6 for Default Route:
+
+- ::/0
+
+# When a frame comes to a Router and Router does not know the MAC Address of destination, what it will do?
+
+- send an ARP request to find out the MAC Address of the destination IP address.
+
+# Sequence of order how a Router will perform steps when it receives a packet
+
+- Check destination MAC ( to verify that the frame is intended for the port it has received on router )
+- Check Ether Type field ( to verify what layer 3 protocol is encapsulated in frame )
+- Frame is de-encapsulated
+- Destination IP address is examined to determine where should it forward the packet.
+
+# When the outgoing interface of router goes down, what will happen to static route associated with it?
+
+- The static route will be removed as no longer valid.
+
+
+--------------------------------------
+
+# Static Routing:
+-----------------
+
+# IPv4:
+- network address
+- subnet mask
+- ip address of next HOP
+- exit Interface
+- Exit Interface and next HOP IP
+- Distance ( Typically used to configure Floating Static routes by setting Administrative distance )
+
+# IPv6:
+- ipv6-prefix
+- /prefix-length
+- ipv6-address of next HOP
+- exit Interface
+- Exit Interface and ipv6-address of next HOP
+- Distance ( Typically used to configure Floating Static routes by setting Administrative distance )
+
+
+# Fully Specific Static Route:
+
+- When two routers are connected via serial cable, this will show that they must be point-to-point connected
+- But when two routers are said to be connected via Ethernet cable, this will mean that there is a possibility that they are directly point-to-point connected or rather there is a multi-access device such as hub or switch which would be causing multiple routers to share same multi-access network. In this condition, it is use full to specify the next-HOP address along side the exit interface.
+  - ip route 172.16.0.0 255.255.0.0 GigabitEthernet 0/0/0 172.16.2.2
+
+
+
+# Standard Static Routes:
+-------------------------
+
+- The route will specify only next-HOP IP address.
+
+
+# Default Static Routes:
+------------------------
+
+- This route is used as a last resort route.
+- More-over this route is used when connecting an Edge Router to service provider network / or a stub router ( which has only one upstream neighbor router )
+
+- /0 for IPv4 network, means none of bits must match between destination IP and and route in Routing table
+- ::/0 for IPv6 network, means none of bits must match between destination IP and and route in Routing table
 
 
 
 
 
+# Floating Static Routes:
+-------------------------
+
+- These routes are configure as a backup route, If primary route is not available.
+- Floating static routes are configured with higher Administrative distance.
+- The router will choose the route with lowest AD. Means first the primary route will be used, If primary route is not present then this floating route will be used.
+
+
+# Summary Static Routes:
+------------------------
+
+
+
+# Static Hosts Routes:
+----------------------
+
+- Means configuring the static route with /32 and /128 ( for IPv6 ) address.
+
+- They are either learned automatically 
+  - L and C shows this
+
+- They are statically configured with /32 subnet mask or /128 prefix mask.
+
+- 
+
+
+
+------------------------------------------------------------------------
