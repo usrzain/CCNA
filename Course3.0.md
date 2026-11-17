@@ -232,6 +232,8 @@ A DHCPv6 router can be
 
 # HSRP :
 
+# HSRP is Cisco proprietary protocol used for FHRP 
+
 - It is Cisco proprietary
 - Active router is elected based on factors:
   - The Router having highest priority. If priority matches then the router with highest IPv4 address
@@ -290,6 +292,8 @@ If router is active, then periodically sends HELLO
 - HSRP Virtual Link Local Address is derived from Virtual MAC Address
 
 
+# VRRP is a Open Standard FHRP, which provides redundancy through use of virtual routers masters and one or more backup routers
+
 # Virtual Router Redundancy Protocol 2 ( VRRP 2 )
 
 - Non-proprietary Election protocol used for same redundancy within a LAN
@@ -304,6 +308,8 @@ If router is active, then periodically sends HELLO
 
 
 # Gateway Load Balancing Protocol ( GLBP )
+
+# GLBP is a Cisco Proprietary protocol which provides Load sharing in addition to Redundancy
 
 - It is also cisco proprietary for load balancing along redundancy.
 - In this all routers in a Group are a single Virtual Router Group

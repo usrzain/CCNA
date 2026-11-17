@@ -128,12 +128,33 @@
 # Router have different broadcast domains per network.
 
 
+
+# How Size of Broadcast Domain is increased:
+- by connecting switches to switches
+- by connecting more PC to switches
+
+# How No of Broadcast domain is increased:
+- When routers are added into the topology
+
+# When size of collision domain is increased:
+- When PC are connected
+
+# When number of collision domain is increased:
+- When more switches are connected
+
 # What LAN switches do to alleviate network congestion:
 
 - Fast port speeds : to reduce congestion
 - Fast internal switching : to provide high performance
 - Large frame buffers : to store large frames for temporary basis before dropping them
 - High port density
+
+
+
+# Frame Forwarding:
+
+- If destination MAC is not present in MAC Address table, then frame will be forward out of all ports except the SRC port.
+
 
 ---------------------------------------------------------------
 
@@ -427,10 +448,16 @@
   - 1 STP Instance for entire bridge network.
 
 - PVST+ :
+  - Proprietary Per-VLAN implementation of IEEE 802.1w
   - 1 STP Instance per VLAN
   - supports port-fast, uplink-fast, backbone fast, BPDU Guard, BPDU Filter, root guard, loop guard.
+  - Used for load balancing
+  - Load balancing is achieved by configuring root bridges manually
+  - More CPU usage
+  - More BW usage
 
 - RSTP :
+  - Cisco implementation of 802.1D
   - Evolution of CST : 802.1w 
   - Provides faster convergence than CST
 
@@ -439,10 +466,12 @@
   - mashup of RSTP and PVST+
 
 - MSTP:
+  - Fast converging of 802.1D
   - Maps multiple VLANs into same spanning tree Instance.
 
 
 - MST:
+  - Reduces number STP instances
   - Cisco implementation of MST
   - provides up-to 16 RSTP instances.
   - combines many VLANs with same physical / logical topology into common RSTP instance.
